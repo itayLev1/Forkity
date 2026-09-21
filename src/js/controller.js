@@ -267,11 +267,12 @@ const controlServings = function(newServings = model.state.recipe.servings) {
   recipeView.update(model.state.recipe);
 }
 
-const controlAddBookmark = function() {
+const controlAddBookmark = async function() {
   // adds or removes bookmark at the current recipe (boolean)
-if(!model.state.recipe.bookmarked) 
-  model.addBookmark(model.state.recipe)
-else model.deleteBookmark(model.state.recipe.id)
+try {
+if(!model.state.recipe.bookmarked)
+  await model.addBookmark(model.state.recipe)
+else await model.deleteBookmark(model.state.recipe.id)
 
 console.log(model.state.recipe);
   // updates recipeView with new bookmark data
@@ -279,6 +280,9 @@ console.log(model.state.recipe);
 
   // render the bookmarks
   bookmarksView.render(model.state.bookmarks)
+} catch (err) {
+  recipeView.renderError(err.message)
+}
 }
 
 const controlBookmarks = function() {
@@ -325,6 +329,8 @@ const controlAuth = async function (credentials) {
     const user = authView.isRegisterMode()
       ? await model.register(credentials)
       : await model.login(credentials);
+    await model.loadBookmarks();
+    bookmarksView.render(model.state.bookmarks);
     authView.renderAuthenticated(user);
   } catch (err) {
     authView.renderError(err.message);
@@ -333,6 +339,7 @@ const controlAuth = async function (credentials) {
 
 const controlLogout = async function () {
   await model.logout();
+  bookmarksView.render(model.state.bookmarks);
   authView.renderSignedOut();
 };
 
@@ -346,7 +353,11 @@ const init = function() {
   addRecipeView.addHandlerUpload(controlAddRecipe);
   authView.addHandlerSubmit(controlAuth);
   authView.addHandlerLogout(controlLogout);
-  model.restoreSession().then(() => authView.update(model.state.user));
+  model.restoreSession().then(async () => {
+    if (model.state.user) await model.loadBookmarks();
+    bookmarksView.render(model.state.bookmarks);
+    authView.update(model.state.user);
+  });
   console.log('Welcome!');
 }
 init();
