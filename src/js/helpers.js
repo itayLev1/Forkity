@@ -20,9 +20,10 @@ export const AJAX = async function (url, uploadData = undefined) {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(uploadData),
       })
-      : fetch(url);
+      : fetch(url, { credentials: 'include' });
 
 
     const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);

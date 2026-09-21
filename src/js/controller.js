@@ -15,7 +15,7 @@ const timeout = function (s) {
   });
 };
 
-// https://forkify-api.herokuapp.com/v2
+// Backend API example: http://localhost:3000/api/recipes
 
 ///////////////////////////////////////
 const renderSpinner = function(parentEl) {
@@ -41,8 +41,8 @@ const showRecipe = async function () {
     //* 1) Loading recipe
     renderSpinner(recipeContainer)
     // fetching and rendering chosen recipe
-    const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`); // returns Promise
-    // const res = await fetch('https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcfb2'); // returns Promise // another check with a specific recipe.
+    const res = await fetch(`http://localhost:3000/api/recipes/${id}`); // returns Promise
+    // const res = await fetch('http://localhost:3000/api/recipes/5ed6604591c37cdc054bcfb2'); // returns Promise // another check with a specific recipe.
     const data = await res.json() // data
 
     // check for errors

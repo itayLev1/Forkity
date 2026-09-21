@@ -3,12 +3,12 @@
 //~ with this variables we can change the configuration of our project.
 
 
-export const API_URL = `https://forkify-api.herokuapp.com/api/v2/recipes/`;
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000/api';
+
+export const API_URL = `${API_BASE_URL}/recipes`;
 
 export const TIMEOUT_SEC = 10;
 
 export const RESULTS_PER_PAGE = 10;
-
-export const KEY = 'b1a56b05-a4a7-41aa-a75a-da3b90b73293';
 
 export const MODAL_CLOSE_SEC = 2.5;
