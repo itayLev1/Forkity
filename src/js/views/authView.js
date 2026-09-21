@@ -11,18 +11,23 @@ class AuthView extends View {
 
   constructor() {
     super();
-    this._btnOpen.addEventListener('click', () => this.toggleWindow());
-    this._btnClose.addEventListener('click', () => this.toggleWindow());
-    this._overlay.addEventListener('click', () => this.toggleWindow());
+    this._btnOpen.addEventListener('click', () => this.openWindow());
+    this._btnClose.addEventListener('click', () => this.closeWindow());
+    this._overlay.addEventListener('click', () => this.closeWindow());
     this._modeButtons.forEach((button) => {
       button.addEventListener('click', () => this.setMode(button.dataset.authMode));
     });
     this.setMode(this._mode);
   }
 
-  toggleWindow() {
-    this._overlay.classList.toggle('hidden');
-    this._window.classList.toggle('hidden');
+  openWindow() {
+    this._overlay.classList.remove('hidden');
+    this._window.classList.remove('hidden');
+  }
+
+  closeWindow() {
+    this._overlay.classList.add('hidden');
+    this._window.classList.add('hidden');
   }
 
   setMode(mode) {

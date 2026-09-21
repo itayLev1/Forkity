@@ -172,7 +172,7 @@
 }
 
 .spinner {
-  margin: 5rem auto;
+  margin: 7rem auto;
   text-align: center;
 
   svg {
@@ -196,8 +196,11 @@
 .message,
 .error {
   max-width: 40rem;
-  margin: 0 auto;
-  padding: 5rem 4rem;
+  margin: 4rem auto;
+  padding: 3rem 2.5rem;
+  border: 1px solid $color-grey-light-2;
+  border-radius: 0.8rem;
+  background-color: $color-grey-light-1;
 
   display: flex;
 
@@ -214,4 +217,9 @@
     line-height: 1.5;
     font-weight: 600;
   }
+}
+
+.error {
+  border-color: rgba($color-primary, 0.28);
+  background-color: #fff4ef;
 }

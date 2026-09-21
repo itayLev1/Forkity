@@ -4,10 +4,10 @@ import View from "./view.js";
 class AddRecipeView extends View {
   _parentElement = document.querySelector('.upload');
   _message = 'Recipe was successfully uploaded :-)'
-  _window = document.querySelector('.add-recipe-window');
+  _window = document.querySelector('.add-recipe-window:not(.auth-window)');
   _overlay = document.querySelector('.overlay');
   _btnOpen = document.querySelector('.nav__btn--add-recipe');
-  _btnClose = document.querySelector('.btn--close-modal');
+  _btnClose = document.querySelector('.add-recipe-window:not(.auth-window) .btn--close-modal');
 
   constructor() {
     super()
@@ -16,21 +16,26 @@ class AddRecipeView extends View {
       this.addHandlerUpload()
   }
 
-  toggleWindow() {
-    this._overlay.classList.toggle('hidden');
-    this._window.classList.toggle('hidden');
+  openWindow() {
+    this._overlay.classList.remove('hidden');
+    this._window.classList.remove('hidden');
+  }
+
+  closeWindow() {
+    this._overlay.classList.add('hidden');
+    this._window.classList.add('hidden');
   }
 
   uploadRecipe
   
   addHandlerShowWindow() {
-    this._btnOpen.addEventListener('click', this.toggleWindow.bind(this))
+    this._btnOpen.addEventListener('click', this.openWindow.bind(this))
   }
 
   
   addHandlerHideWindow() {
-    this._btnClose.addEventListener('click', this.toggleWindow.bind(this))
-    this._overlay.addEventListener('click', this.toggleWindow.bind(this))
+    this._btnClose.addEventListener('click', this.closeWindow.bind(this))
+    this._overlay.addEventListener('click', this.closeWindow.bind(this))
   }
   
   addHandlerUpload(handler) {
