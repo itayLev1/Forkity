@@ -3,3 +3,4 @@ api/.env
 src/node_modules/
 src/.parcel-cache/
 src/dist/
+./problems-behaviour.txt

@@ -1,0 +1,1 @@
+1. When opening the sign-in/sign-up modal it is not responding and not closing.
