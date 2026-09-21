@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid()) @db.Uuid
+  email        String     @unique
+  passwordHash String     @map("password_hash")
+  displayName  String     @map("display_name")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  recipes      Recipe[]
+  favorites    Favorite[]
+
+  @@map("users")
+}
+
+model Recipe {
+  id          String       @id @default(uuid()) @db.Uuid
+  authorId    String?      @map("author_id") @db.Uuid
+  title       String
+  publisher   String
+  sourceUrl   String       @map("source_url")
+  imageUrl    String       @map("image_url")
+  servings    Int
+  cookingTime Int          @map("cooking_time")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  author      User?        @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  ingredients Ingredient[]
+  favorites   Favorite[]
+
+  @@index(authorId)
+  @@map("recipes")
+}
+
+model Ingredient {
+  id          String   @id @default(uuid()) @db.Uuid
+  recipeId    String   @map("recipe_id") @db.Uuid
+  quantity    Decimal? @db.Decimal(10, 2)
+  unit        String
+  description String
+  recipe      Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@index(recipeId)
+  @@map("ingredients")
+}
+
+model Favorite {
+  userId    String   @map("user_id") @db.Uuid
+  recipeId  String   @map("recipe_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, recipeId])
+  @@index(recipeId)
+  @@map("favorites")
+}
