@@ -11,7 +11,16 @@ const port = Number(process.env.PORT) || 3000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: process.env.FRONTEND_ORIGIN || 'http://localhost:1234',
+  origin: (origin, callback) => {
+    const configuredOrigin = process.env.FRONTEND_ORIGIN || 'http://localhost:1234';
+    const isDevelopment = process.env.NODE_ENV !== 'production';
+
+    if (!origin || isDevelopment || origin === configuredOrigin) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Origin is not allowed by CORS'));
+  },
   credentials: true,
 }));
 
