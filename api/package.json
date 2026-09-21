@@ -1,0 +1,14 @@
+{
+  "name": "forkity-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend API for Forkity",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

@@ -1,0 +1,7 @@
+flowchart LR
+    User --> View[DOM Views]
+    View --> Controller
+    Controller --> Model
+    Model --> ExternalAPI[Forkify API]
+    Model --> BrowserStorage[localStorage]
+    Controller --> View

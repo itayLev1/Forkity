@@ -1,0 +1,46 @@
+flowchart TB
+    Browser[Web Browser]
+
+    subgraph Frontend["Frontend Application"]
+        UI[Recipe UI]
+        FrontendState[Client State]
+        ApiClient[Backend API Client]
+    end
+
+    subgraph Backend["Backend Application"]
+        Routes[REST API Routes]
+        Auth[Authentication and Authorization]
+        RecipeService[Recipe Service]
+        UserService[User Service]
+        FavoriteService[Favorite Service]
+        Validation[Input Validation]
+    end
+
+    subgraph Data["Persistent Data"]
+        Database[(PostgreSQL Database)]
+        Migrations[Database Migrations]
+    end
+
+    subgraph External["External Services"]
+        RecipeProvider[External Recipe Provider]
+        ImageStorage[Image Storage or External Image URLs]
+    end
+
+    Browser --> UI
+    UI --> FrontendState
+    FrontendState --> ApiClient
+    ApiClient -->|HTTPS JSON requests| Routes
+
+    Routes --> Auth
+    Routes --> Validation
+    Routes --> RecipeService
+    Routes --> UserService
+    Routes --> FavoriteService
+
+    RecipeService --> Database
+    UserService --> Database
+    FavoriteService --> Database
+    Migrations --> Database
+
+    RecipeService --> RecipeProvider
+    RecipeService --> ImageStorage
