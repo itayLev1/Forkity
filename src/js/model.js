@@ -3,7 +3,7 @@
 //~ By using export on the state variable it will automatically update the variable on the import side which is the controller in this case. 
 
 import { async } from 'regenerator-runtime';
-import { API_URL, RESULTS_PER_PAGE } from './config.js';
+import { API_BASE_URL, API_URL, RESULTS_PER_PAGE } from './config.js';
 // import { getJSON, sendJSON } from './helpers.js';
 import { AJAX } from './helpers.js'
 // import { search } from 'core-js/fn/symbol';
@@ -12,6 +12,7 @@ import { AJAX } from './helpers.js'
 
 //* initialize state
 export const state = {
+  user: null,
   recipe: {},
   search: {
     query: '',
@@ -20,6 +21,36 @@ export const state = {
     resultsPerPage: RESULTS_PER_PAGE,
   },
   bookmarks: [],
+};
+
+export const restoreSession = async function () {
+  try {
+    const data = await AJAX(`${API_BASE_URL}/auth/me`);
+    state.user = data.user;
+  } catch (_error) {
+    state.user = null;
+  }
+};
+
+export const register = async function ({ displayName, email, password }) {
+  const data = await AJAX(`${API_BASE_URL}/auth/register`, {
+    displayName,
+    email,
+    password,
+  });
+  state.user = data.user;
+  return state.user;
+};
+
+export const login = async function ({ email, password }) {
+  const data = await AJAX(`${API_BASE_URL}/auth/login`, { email, password });
+  state.user = data.user;
+  return state.user;
+};
+
+export const logout = async function () {
+  await AJAX(`${API_BASE_URL}/auth/logout`, {});
+  state.user = null;
 };
 
 const createRecipeObject = function(data) {

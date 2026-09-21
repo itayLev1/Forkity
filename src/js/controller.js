@@ -188,6 +188,7 @@ import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
+import authView from './views/authView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -286,6 +287,8 @@ const controlBookmarks = function() {
 
 const controlAddRecipe = async function(newRecipe) {
   try {
+  if (!model.state.user) throw new Error('Please sign in before uploading a recipe.');
+
   // Show loading spinner
   addRecipeView.renderSpinner()
 
@@ -316,6 +319,23 @@ const controlAddRecipe = async function(newRecipe) {
   }
 }
 
+const controlAuth = async function (credentials) {
+  try {
+    authView.renderSpinner();
+    const user = authView.isRegisterMode()
+      ? await model.register(credentials)
+      : await model.login(credentials);
+    authView.renderAuthenticated(user);
+  } catch (err) {
+    authView.renderError(err.message);
+  }
+};
+
+const controlLogout = async function () {
+  await model.logout();
+  authView.renderSignedOut();
+};
+
 const init = function() {
   bookmarksView.addHandlerRender(controlBookmarks)
   recipeView.addHandlerRender(controlRecipes);
@@ -324,6 +344,9 @@ const init = function() {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+  authView.addHandlerSubmit(controlAuth);
+  authView.addHandlerLogout(controlLogout);
+  model.restoreSession().then(() => authView.update(model.state.user));
   console.log('Welcome!');
 }
 init();

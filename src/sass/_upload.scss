@@ -97,3 +97,51 @@
     justify-self: center;
   }
 }
+
+.auth-form {
+  display: grid;
+  gap: 2rem;
+  max-width: 42rem;
+}
+
+.auth__message {
+  font-size: 1.6rem;
+}
+
+.auth__modes {
+  display: flex;
+  gap: 1rem;
+
+  button {
+    border: none;
+    background: none;
+    color: $color-primary;
+    cursor: pointer;
+    font: inherit;
+    padding: 0.5rem;
+  }
+
+  .auth__mode--active {
+    border-bottom: 2px solid $color-primary;
+    font-weight: 700;
+  }
+}
+
+.auth__fields {
+  display: grid;
+  gap: 1.2rem;
+
+  label {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  input {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    padding: 0.8rem 1rem;
+  }
+}

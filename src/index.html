@@ -49,6 +49,14 @@
               </button>
             </li>
             <li class="nav__item">
+              <button class="nav__btn nav__btn--auth">
+                <svg class="nav__icon">
+                  <use href="./img/icons.svg#icon-user"></use>
+                </svg>
+                <span>Sign in</span>
+              </button>
+            </li>
+            <li class="nav__item">
               <button class="nav__btn nav__btn--bookmarks">
                 <svg class="nav__icon">
                   <use href="./img/icons.svg#icon-bookmark"></use>
@@ -263,6 +271,24 @@
     </div>
 
     <div class="overlay hidden"></div>
+    <div class="add-recipe-window auth-window hidden">
+      <button class="btn--close-modal auth__close">&times;</button>
+      <form class="auth-form">
+        <h2 class="upload__heading">Account</h2>
+        <p class="auth__message">Sign in to save and upload recipes.</p>
+        <div class="auth__modes">
+          <button type="button" data-auth-mode="login">Sign in</button>
+          <button type="button" data-auth-mode="register">Create account</button>
+        </div>
+        <div class="auth__fields">
+          <label class="hidden">Name<input name="displayName" type="text" /></label>
+          <label>Email<input required name="email" type="email" autocomplete="email" /></label>
+          <label>Password<input required name="password" type="password" minlength="8" autocomplete="current-password" /></label>
+        </div>
+        <button class="btn auth__submit" type="submit">Sign in</button>
+        <button class="btn auth__logout hidden" type="button">Sign out</button>
+      </form>
+    </div>
     <div class="add-recipe-window hidden">
       <button class="btn--close-modal">&times;</button>
       <form class="upload">
