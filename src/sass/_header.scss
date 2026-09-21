@@ -1,28 +1,33 @@
 .header {
   grid-area: head;
-  background-color: $color-grey-light-1;
+  background-color: #fffdf8;
+  border-bottom: 1px solid $color-grey-light-2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 3rem;
+  padding: 0 2.5rem 0 4rem;
 
   &__logo {
-    margin-left: 4rem;
     height: 4.6rem;
     display: block;
+    flex: 0 0 auto;
   }
 }
 
 .search {
-  background-color: #fff;
-  border-radius: 10rem;
+  background-color: $color-grey-light-1;
+  border: 1px solid transparent;
+  border-radius: 0.7rem;
   display: flex;
   align-items: center;
-  padding-left: 3rem;
-  transition: all 0.3s;
+  flex: 1 1 42rem;
+  max-width: 52rem;
+  padding-left: 1.8rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
 
   &:focus-within {
-    transform: translateY(-2px);
-    box-shadow: 0 0.7rem 3rem rgba($color-grey-dark-1, 0.08);
+    border-color: $color-primary;
+    box-shadow: 0 0.5rem 1.5rem rgba($color-grey-dark-1, 0.08);
   }
 
   &__field {
@@ -31,7 +36,8 @@
     font-family: inherit;
     color: inherit;
     font-size: 1.7rem;
-    width: 30rem;
+    width: 100%;
+    padding: 1.25rem 0;
 
     &:focus {
       outline: none;
@@ -42,10 +48,10 @@
     }
 
     @media only screen and (max-width: $bp-medium) {
-      width: auto;
+      width: 100%;
 
       &::placeholder {
-        color: white;
+        color: $color-grey-light-3;
       }
     }
   }
@@ -58,7 +64,7 @@
 
 .nav {
   align-self: stretch;
-  margin-right: 2.5rem;
+  margin-left: auto;
 
   &__list {
     list-style: none;
@@ -80,7 +86,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0 1.5rem;
+    padding: 0 1.2rem;
     transition: all 0.3s;
 
     display: flex;
@@ -140,5 +146,55 @@
   .nav__btn--bookmarks:hover + & {
     visibility: visible;
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: $bp-medium) {
+  .header {
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    flex-wrap: wrap;
+  }
+
+  .header__logo {
+    height: 3.8rem;
+  }
+
+  .search {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .nav {
+    margin-left: auto;
+
+    &__btn {
+      padding: 0 0.8rem;
+      font-size: 1.2rem;
+
+      svg {
+        margin-right: 0.4rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $bp-small) {
+  .header {
+    align-items: center;
+  }
+
+  .nav__btn span {
+    display: none;
+  }
+
+  .nav__btn svg {
+    margin-right: 0;
+  }
+
+  .bookmarks {
+    right: -1rem;
+    width: min(34rem, calc(100vw - 2rem));
   }
 }

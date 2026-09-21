@@ -1,7 +1,8 @@
 .search-results {
-  padding: 3rem 0;
+  padding: 2.5rem 0 3rem;
   display: flex;
   flex-direction: column;
+  background-color: #fffdf8;
 }
 
 .results {
@@ -11,7 +12,8 @@
 
 .pagination {
   margin-top: auto;
-  padding: 0 3.5rem;
+  padding: 1.5rem 2.5rem 0 3.25rem;
+  border-top: 1px solid $color-grey-light-2;
 
   &::after {
     content: '';
@@ -33,7 +35,7 @@
   color: $color-grey-dark-2;
   font-size: 1.2rem;
   padding: 0 3.5rem;
-  margin-top: 4rem;
+  margin-top: 3rem;
 
   .twitter-link:link,
   .twitter-link:visited {
